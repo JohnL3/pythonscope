@@ -1,0 +1,141 @@
+body, html {
+  margin: 0;
+  font-size: 18px;
+}
+:root {
+  --definition-text: monospace, serif;
+  --definition-color: #656161;
+  --definition-name: #6f6c6c;
+  --standard-padding: 20px;
+  --background-barley-white: #fbfbfb;
+  --border-color-charcole: #9a9292;
+  --comment-color: #656161;
+  --font-130: 130%;
+  --font-110: 110%;
+  --font-90: 90%;
+  --font-80: 80%;
+  --font-70: 70%;
+}
+
+.highlight {
+  color: red;
+}
+
+.code-error {
+	color: red;
+}
+
+.comment {
+	color: var(--comment-color);
+}
+
+.variable {
+	color: var(--comment-color);
+}
+
+.snippet {
+	font-size: var(--font-70);
+}
+
+pre {
+	white-space: pre-wrap;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: 200px 1fr 100px;
+	grid-template-rows: repeat(6, minmax(10px, auto));
+	margin-bottom: 60px;
+}
+
+aside {
+	width: 200px;
+	border: 1px solid var(--border-color-charcole);
+	grid-column: 1;
+	grid-row: 1/-1;
+}
+.definition-box {
+  box-sizing: border-box;
+  padding: var(--standard-padding);
+  border: 1px solid var(--border-color-charcole);
+  background-color: var(--background-barley-white);
+  margin: 10px 20px;
+  box-shadow: 4px 5px 4px lightgrey;
+  max-width: 100%;
+  max-width: 80%;
+}
+
+.define {
+	grid-column: 2;
+	grid-row: 1;
+}
+
+.discuss {
+	grid-column: 2;
+	grid-row: 3;
+}
+
+.definition {
+  font-family: var(--definition-text);
+  font-size: var(--font-110);
+  color: var(--definition-color);
+}
+
+.definition-type {
+  font-size: var(--font-130);
+  font-weight: 600;
+  color: var(--definition-name);
+  position: relative;
+  top: 0;
+  left: 0;
+  margin: 0;
+}
+
+.summary
+.lesson,
+.define,
+.discuss,
+.details,
+.methods {
+	height: fit-content;
+	max-width: 80%;
+}
+
+.details {
+	grid-column: 2;
+	grid-row: 4;
+}
+
+.methods-list {
+  font-size: var(--font-80);
+  margin: 8px 0;
+}
+
+.methods {
+  font-size: var(--font-90);
+}
+
+.lesson {
+  box-sizing: border-box;
+  padding: var(--standard-padding);
+  border: 1px solid var(--border-color-charcole);
+  background-color: var(--background-barley-white);
+  margin: 10px 20px;
+  box-shadow: 4px 5px 4px lightgrey;
+  max-width: 80%;
+}
+
+.lesson.lesson-one {
+	grid-column: 2;
+	grid-row: 2;
+}
+
+.lesson.lesson-two {
+	grid-column: 2;
+	grid-row: 5;
+}
+
+.summary {
+	grid-column: 2;
+	grid-row: 6;
+}

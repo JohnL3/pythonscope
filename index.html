@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+	<div class='container'>
+		<aside>
+		</aside>
+		
+		<div class="definition-box define">
+		  <p class="definition-type">What is Scope</p>
+		  <p class="definition">Scope refers to the visibility of variables. And which parts of your program can see or use them.</p> 
+		  <p class='definition'>Variables declared outside of functions are global variables. And Once defined, every part of your program can access a global
+		  variable.</p> 
+		  <p class='definition'>Local scope allows us to limit a variable's scope to a single function.</p>
+		</div>
+		
+		<div class='lesson lesson-one'>
+			<p class='lesson-para'>Now that you are starting to understand what scoping is, let's look at variables with global
+			scope. And how it might look in your code, and compare it to a variable that has local scope.</p> 
+			<p>After that we will look at python scope a bit more in depth.</p>
+			
+			<code>
+			<pre class='snippet'>
+i_am_a_global = "I am global"
+my_age = 49
+
+def whitch_scope():
+	print("From within function:", i_am_a_global, + " and I can be accessed here")
+	new_age = my_age + 1
+	print("From within function:", f"in 1 year I will be {new_age} years old")
+	
+whitch_scope()
+ 
+Outputs: 
+From within function: I am global and I can be accessed here
+From within function: In 1 year I will be 50 years old
+
+			</pre>
+		  </code>
+		  
+		  <p>In the code snippet above we can plainly see that from within the function both the <span class='variable'>i_am_a_global</span> and <span class='variable'>my_age</span>
+		  global variables can be accessed and used.</p>
+		  
+		  <code>
+			<pre class='snippet'>
+def whitch_scope():
+	first_name = "John"
+	print("From within function:", f"The variable first_name can only be accessed from within this function")
+	
+whitch_scope()
+
+print("From Outside function:", first_name)
+
+Outputs: 
+From within function: John
+From within function: The variable first_name can only be accessed from within this function
+
+<span class='code-error'>NameError: name 'first_name' is not defined</span>
+
+			</pre>
+		  </code>
+		  
+		  <p>In the code snippet above we can plainly see that from within the function the local variable <span class='variable'>first_name</span> can be used.
+		  But calling it from outside the function results with an error which is shown in red.</p>
+		  
+		  <p>But there is more to scoping in python, and while I have shown we can access global variables and use them
+		  within functions and that local variables can only be used within the function they are created in, this is not
+		  all there is to learn on scoping in python. And when you read the next two sections you will realize what you have
+		  learnt already is not enough to avoid you running into scoping issues.</p>
+		  
+		</div>
+		
+		<div class="definition-box discuss">
+		  <p class="definition-type">Scoping</p>
+		  <p class="definition">At first scoping in python might seem similar to other languages. Variables created in the <span class="highlight">global scope</span>
+			are available from anywhere within the code.<br>Variables created in functions are <span class='highlight'>Locally scoped</span> and are only available
+			within that function and cannot be accessed from anywhere else.</p>
+		</div>
+
+		<div class="methods definition-box details">
+		  <p class="methods definition-type">Scoping in Python</p>
+		  <p class="methods-list definition">While in many or most other programming languages variables are treated as global if not otherwise declared, Python deals with variables the other way around. They are local, if not otherwise declared.</p>
+		  
+		  <code>
+			<pre class='snippet'>
+can_access = False
+
+def update_access():
+	age = int(input('Enter your age: '))
+	if age >= 18:
+	    <span class='comment'># We may think this is updating the global variable can_access, but its not as it is now considered a local variable</span>
+	    can_access = True
+	    return('You are old enough enter')
+	else:
+	    return('You are too young, you may not enter');
+		
+update_access()
+ 
+print(can_access)<span class='comment'> # will still print out False</span>
+
+			</pre>
+		  </code>
+		</div>
+		
+		<!-- Lesson 2 -->
+		<div class='lesson lesson-two'>
+			<p class='lesson-para'>So has the code snippet above have you confused. This is happening
+			since python considers variables in functions local if not otherwise declared</p>
+			<p>And while It looks to us like we are only updating <span class='variable'>can_access</span> from False to True, python
+			sees no mention of can_access elsewhere within the function and treats it as a local variable.</p>
+			<p>So, while we can access global variables and use their values, reassigning them new values cannot be
+			performed like this for certain cases.</p>
+			<p>Let's look at some issues you can face and then I will show how you should work with scope in python
+			and have no problems.</p>
+			
+					  <code>
+			<pre class='snippet'>
+ta = {'age': 5, 'day': 2}
+tb = [6, 7]
+tc = 8
+td = True
+
+def whitch_scope():
+    ta['age'] = 6 <span class='comment'># changing value within dict or adding a value causes no issues</span>
+    del ta['day'] <span class='comment'># or deleteing a key</span>
+    <span class='comment'>#ta = {}  but if you try to set it to empty you will thorw an error</span>
+    tb[0] = 7
+    tb.pop(1)
+    <span class='comment'>#tb = []  the same thing happens with lists</span>
+    <span class='comment'>#tc += 1  changeing value like this thorws an error</span>
+    <span class='comment'>#tc = 9  while doing it like this the variable is now considered as a local variable</span>
+    <span class='comment'>#tc += 1 while doing it like this throws and error</span>
+    td = False <span class='comment'># as you previously seen this gets treated as a local variable</span>
+    
+whitch_scope()
+
+			</pre>
+		  </code>
+		  
+		  <p>Python seems to want us to try not use global variables and if we wish to use them, we
+		  need to do things a certain way. One way would be to pass the global variables into the function
+		  as parameters and if we need these variables to be updated, then to assign the updated values to our
+		  variables using the returned values from the function.</p>
+		  
+		  <code>
+			<pre class='snippet'>
+ta = {'age': 5, 'day': 2}
+tb = [6, 7]
+tc = 8
+td = True
+
+def whitch_scope(t1, t2, t3, t4):
+    t1['age'] = 6 
+    del t1['day']
+    t1 = {}
+    t2[0] = 17
+    t2.pop(1)
+    t3 += 1
+    t4 = False
+	
+    return t1, t2, t3, t4
+    
+ta,tb,tc,td = whitch_scope(ta, tb, tc, td)
+print(ta, tb, tc, td)
+
+Output
+{} [17] 9 False
+
+			</pre>
+		  </code>
+		  
+		  <p>As you can see from the above snippet, passing the global variables into the function as
+		  parameters and using the return values to update them works great and there are no issues.</p>
+		  <p>But there also is another option that python has provided which is using the word <span class='highlight'>global</span> within the function
+		  alongside the global variable names, Which declares to the function that the variables are global.</p>
+		  
+		  <code>
+			<pre class='snippet'>
+ta = {'age': 5, 'day': 2}
+tb = [6, 7]
+tc = 8
+td = True
+
+def whitch_scope():
+    global ta, tb, tc, td <span class='comment'># Add the word global followed by the variables names. </span>
+	
+    ta['age'] = 6 
+    del ta['day']
+    ta = {}
+    tb[0] = 17
+    tb.pop(1)
+    tc += 1
+    td = False
+	
+    
+whitch_scope()
+print(ta, tb, tc, td)
+
+Output
+{} [17] 9 False
+
+			</pre>
+		  </code>
+		  <p>As you can see from the above snippet, using the word <span class='highlight'>global</span> along with the name of the global variables
+		  makes things very easy and you will have no issues.</p>
+		  <p>Final point on the global variables before we move on to local variables. If your function has an inner function
+		  which also requires working with the global variables you will also need to use the word global along with
+		  the variable names inside the inner function. Or pass them in as parameters and update them via return values.</p>
+		  
+		  <p>So, what can go wrong when referencing a local variable of a function inside an inner function. The same issues we
+		  encountered with global variables inside a function.</p>
+		  
+		  <code>
+			<pre class='snippet'>
+def whitch_scope():
+    my_age = 49 <span class='comment'># local variable my_age</span>
+    def inner_scope():
+        my_age += 1 <span class='comment'># Issue when we try to run this line.</span>
+        print(my_age)
+    inner_scope()
+    
+whitch_scope()
+
+<span class='code-error'>UnboundLocalError: local variable 'my_age' referenced before assignment</span>
+
+			</pre>
+		  </code>
+		  
+		  <p>And again, the solution is practically the same as it was for the global issues. We can
+		  pass the variables in as parameters and update via the return values.</p>
+		  <p>Or similar to last case python gives us the <span class='highlight'>nonlocal</span> key word which we use in the inner function
+		  alongside the local variables we wish to use.</p>
+		  
+		  <code>
+			<pre class='snippet'>
+def whitch_scope():
+    my_age = 49 <span class='comment'># local variable my_age</span>
+    def inner_scope():
+	nonlocal my_age <span class='comment'># No longer an issue because of this</span>
+        my_age += 1 
+        print('my_age in inner function:',my_age)
+    inner_scope()
+    print('my_age in outer function:',my_age)
+    
+whitch_scope()
+
+Output:
+my_age in inner function: 50
+my_age in outer function: 50
+
+			</pre>
+		  </code>
+		  
+		</div>
+		<!-- End of lesson two -->
+		
+		<div class='summary definition-box'>
+			<p>So to finish up on the subject of scope in python, let's break it down into items to remember</p>
+			<ul>
+				<li>Global variables could be treated as local in functions, if not otherwise declared.</li>
+				<li>Avoid this by using the <span class='highlight'>global</span> key word along with the variable name/s inside functions.</li>
+				<li>And do the same in nested functions.</li>
+				<li>You can also pass the variables in as parameters and use the return values to update the global variables if needed.</li>
+				<li>When nesting functions you also need to use the <span class='highlight'>nonlocal</span> keyword for when your working with local variables from the outer function.</li>
+				<li>Or again, you can pass them to the inner functions as parameters and update them with the returned values if needed.</li>
+			</ul>
+		</div>
+		
+	</div>
+            
+    <script src="script.js"></script>
+  </body>
+</html>
